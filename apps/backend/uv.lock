@@ -2,12 +2,6 @@ version = 1
 revision = 3
 requires-python = ">=3.14"
 
-[manifest]
-members = [
-    "atv1-ldw-apiflasgger",
-    "backend",
-]
-
 [[package]]
 name = "alembic"
 version = "1.18.4"
@@ -41,14 +35,9 @@ wheels = [
 ]
 
 [[package]]
-name = "atv1-ldw-apiflasgger"
-version = "0.1.0"
-source = { virtual = "." }
-
-[[package]]
 name = "backend"
 version = "0.1.0"
-source = { virtual = "apps/backend" }
+source = { virtual = "." }
 dependencies = [
     { name = "alembic" },
     { name = "flasgger" },

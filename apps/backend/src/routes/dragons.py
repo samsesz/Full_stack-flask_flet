@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from database import db
-from models import Dragons
-from schemas.dragons_schema import DragonsSchema
+from src.database import db
+from src.models import Dragons
+from src.schemas.dragons_schema import DragonsSchema
 from pydantic import ValidationError
 
 dragons_bp = Blueprint('dragons', __name__, url_prefix='/dragons')

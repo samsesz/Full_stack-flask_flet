@@ -1,4 +1,4 @@
-from database import db
+from src.database import db
 
 class Characters(db.Model):
     __tablename__ = 'characters'

@@ -4,21 +4,21 @@ import os
 from dotenv import load_dotenv
 
 # SCHEMAS
-from schemas.characters_schema import CharactersSchema
-from schemas.dragons_schema import DragonsSchema
-from schemas.houses_schema import HousesSchema
-from schemas.swords_schema import SwordsSchema
+from src.schemas.characters_schema import CharactersSchema
+from src.schemas.dragons_schema import DragonsSchema
+from src.schemas.houses_schema import HousesSchema
+from src.schemas.swords_schema import SwordsSchema
 
 load_dotenv()
 
 def create_app():
     app = Flask(__name__)
 
-    from database import init_db
+    from src.database import init_db
     init_db(app)
 
     db_url = os.getenv('DATABASE_URL', '')
-    env_label = 'Supabase' if 'supbase' in db_url else 'Local (Docker)'
+    env_label = 'Supabase' if 'supabase' in db_url else 'Local (Docker)'
 
     swagger_template = {
         "swagger": "2.0",
@@ -41,10 +41,10 @@ def create_app():
 
     Swagger(app, template=swagger_template)
 
-    from routes.characters import characters_bp
-    from routes.dragons import dragons_bp
-    from routes.houses import houses_bp
-    from routes.swords import swords_bp
+    from src.routes.characters import characters_bp
+    from src.routes.dragons import dragons_bp
+    from src.routes.houses import houses_bp
+    from src.routes.swords import swords_bp
 
     app.register_blueprint(characters_bp, url_prefix='/api/characters')
     app.register_blueprint(dragons_bp, url_prefix='/api/dragons')
@@ -56,5 +56,4 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True)

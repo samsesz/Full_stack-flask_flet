@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from database import db
-from models import Houses
-from schemas.houses_schema import HousesSchema
+from src.database import db
+from src.models import Houses
+from src.schemas.houses_schema import HousesSchema
 from pydantic import ValidationError
 
 houses_bp = Blueprint('houses', __name__, url_prefix='/houses')
