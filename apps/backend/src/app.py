@@ -46,10 +46,10 @@ def create_app():
     from src.routes.houses import houses_bp
     from src.routes.swords import swords_bp
 
-    app.register_blueprint(characters_bp, url_prefix='/api/characters')
-    app.register_blueprint(dragons_bp, url_prefix='/api/dragons')
-    app.register_blueprint(houses_bp, url_prefix='/api/houses')
-    app.register_blueprint(swords_bp, url_prefix='/api/swords')
+    app.register_blueprint(characters_bp)
+    app.register_blueprint(dragons_bp)
+    app.register_blueprint(houses_bp)
+    app.register_blueprint(swords_bp)
 
     return app
 

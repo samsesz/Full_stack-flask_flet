@@ -4,7 +4,7 @@ from src.models import Houses
 from src.schemas.houses_schema import HousesSchema
 from pydantic import ValidationError
 
-houses_bp = Blueprint('houses', __name__, url_prefix='/houses')
+houses_bp = Blueprint('houses', __name__, url_prefix='/api/houses')
 
 @houses_bp.route('/', methods=['GET'])
 def get_all():
@@ -38,7 +38,7 @@ def get_by_id(id):
       200:
         description: OK
     """
-    houses = Houses.query.get(id)
+    houses = db.session.get(Houses, id)
 
     if not houses:
         return jsonify({"error": "Casa não encontrada"}), 404

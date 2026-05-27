@@ -4,7 +4,7 @@ from src.models import Dragons
 from src.schemas.dragons_schema import DragonsSchema
 from pydantic import ValidationError
 
-dragons_bp = Blueprint('dragons', __name__, url_prefix='/dragons')
+dragons_bp = Blueprint('dragons', __name__, url_prefix='/api/dragons')
 
 @dragons_bp.route('/', methods=['GET'])
 def get_all():
@@ -38,12 +38,13 @@ def get_by_id(id):
       200:
         description: OK
     """
-    dragon = Dragons.query.get(id)
+    dragon = db.session.get(Dragons, id)
 
     if not dragon:
         return jsonify({"error": "Dragão não encontrado"}), 404
 
     return jsonify(dragon.to_dict()), 200
+
 
 
 @dragons_bp.route('/', methods=['POST'])
@@ -60,20 +61,47 @@ def create():
         schema:
           $ref: '#/definitions/Dragons'
     responses:
-      200:
+      201:
         description: Dragão criado com sucesso
-        schema:
-          $ref: '#/definitions/Dragons'
     """
+
     try:
-       data = DragonsSchema(**request.json)
-       novo_dragon = Dragons(**data.model_dump())
-       db.session.add(novo_dragon)
-       db.session.commit()
-       
-       return jsonify(novo_dragon.to_dict()),201
+
+        if not request.json:
+            return jsonify({
+                "error": "JSON não enviado"
+            }), 400
+
+        print("JSON RECEBIDO:", request.json)
+
+        data = DragonsSchema(**request.json)
+
+        novo_dragon = Dragons(
+            title=data.title,
+            description=data.description
+        )
+
+        db.session.add(novo_dragon)
+        db.session.commit()
+
+        return jsonify(novo_dragon.to_dict()), 201
+
     except ValidationError as err:
-      return jsonify({"errors": err.errors()}), 400
+
+        print("ERRO DE VALIDAÇÃO:", err.errors())
+
+        return jsonify({
+            "errors": err.errors()
+        }), 400
+
+    except Exception as e:
+
+        print("ERRO GERAL:", str(e))
+
+        return jsonify({
+            "error": str(e)
+        }), 400
+
 
 @dragons_bp.route('/<int:id>', methods=['PUT'])
 def update(id):

@@ -4,7 +4,7 @@ from src.models import Swords
 from src.schemas.swords_schema import SwordsSchema
 from pydantic import ValidationError
 
-swords_bp = Blueprint('swords', __name__, url_prefix='/swords')
+swords_bp = Blueprint('swords', __name__, url_prefix='/api/swords')
 
 @swords_bp.route('/', methods=['GET'])
 def get_all():
@@ -38,7 +38,7 @@ def get_by_id(id):
       200:
         description: OK
     """
-    swords = Swords.query.get(id)
+    swords = db.session.get(Swords, id)
 
     if not swords:
         return jsonify({"error": "Espada não encontrada"}), 404

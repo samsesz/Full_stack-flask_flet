@@ -4,7 +4,7 @@ from src.models import Characters
 from src.schemas.characters_schema import CharactersSchema
 from pydantic import ValidationError
 
-characters_bp = Blueprint('characters', __name__, url_prefix='/characters')
+characters_bp = Blueprint('characters', __name__, url_prefix='/api/characters')
 
 @characters_bp.route('/', methods=['GET'])
 def get_all():
@@ -38,7 +38,8 @@ def get_by_id(id):
       200:
         description: OK
     """
-    character = Characters.query.get(id)
+
+    character = db.session.get(Characters, id)
 
     if not character:
         return jsonify({"error": "Personagem não encontrado"}), 404
