@@ -1,25 +1,22 @@
 class AppState:
     def __init__(self) -> None:
-        self.user_id = 1             # Simulando usuário logado
-        self.courses: list[dict] = []
-        self.current_course: dict | None = None
-        self.current_lesson: dict | None = None
+        self.user_id = 1
+        self.characters: list[dict] = []
+        self.dragons: list[dict] = []
+        self.swords: list[dict] = []
+        self.houses: list[dict] = []
+        self.current_character: dict | None = None
+        self.current_dragon: dict | None = None
+        self.current_sword: dict | None = None
+        self.current_house: dict | None = None
+        self.feedback_message = ""
+        self.feedback_type = "success"  # "success" ou "error"
 
-        # Estado das Perguntas
-        self.current_question_ids: list[int] = []
-        self.current_questions_map: dict[int, dict] = {}
-        self.current_question_index = 0
-        self.selected_option: int | None = None
+    def reset_characters_state(self) -> None:
+        """Limpa o estado ao voltar para a lista de personagens."""
+        self.current_character = None
+        self.feedback_message = ""
+        self.feedback_type = "success"
 
-    def reset_lesson_state(self) -> None:
-        """Limpa o estado ao sair de uma lição."""
-        self.current_lesson = None
-        self.current_question_index = 0
-        self.selected_option = None
-
-    def reset_course_state(self) -> None:
-        """Limpa o estado ao voltar para a lista de cursos."""
-        self.current_course = None
-        self.reset_lesson_state()
 
 state = AppState()

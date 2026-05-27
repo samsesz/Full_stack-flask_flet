@@ -7,7 +7,7 @@ from src.api import (
     get_swords
 )
 
-from src.views.entities import build_entities_view
+from apps.frontend.src.views.dragons import build_entities_view
 
 
 def main(page: ft.Page):
